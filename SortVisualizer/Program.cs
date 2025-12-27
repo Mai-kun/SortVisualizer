@@ -1,6 +1,7 @@
 using System;
 using Raylib_CSharp;
 using Raylib_CSharp.Colors;
+using Raylib_CSharp.Interact;
 using Raylib_CSharp.Rendering;
 using Raylib_CSharp.Windowing;
 using SortingAlgorithm;
@@ -21,14 +22,28 @@ internal static class Program
 
         float timer = 0;
         const float delay = 0.01f;
+        var isPaused = false;
 
         while (!Window.ShouldClose())
         {
-            timer += Time.GetFrameTime();
-            if (timer >= delay)
+            if (Input.IsKeyPressed(KeyboardKey.R))
             {
-                context.Update();
-                timer = 0;
+                context.Restart();
+            }
+
+            if (Input.IsKeyPressed(KeyboardKey.Space))
+            {
+                isPaused = !isPaused;
+            }
+
+            if (!isPaused)
+            {
+                timer += Time.GetFrameTime();
+                if (timer >= delay)
+                {
+                    context.Update();
+                    timer = 0;
+                }
             }
 
             Graphics.BeginDrawing();
@@ -38,6 +53,7 @@ internal static class Program
             Graphics.DrawText(context.CurrentAlgorithmName, 5, 5, 24, Color.White);
 
             Graphics.EndDrawing();
+
         }
 
         Window.Close();

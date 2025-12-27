@@ -22,7 +22,7 @@ public class SortingContext
         Restart();
     }
 
-    private void Restart()
+    public void Restart()
     {
         _sorter.Reset();
         _sortingProcess = _sorter.Sort();
