@@ -55,31 +55,34 @@ public class BubbleSort : ISorter
     public void Draw(int screenWidth, int screenHeight)
     {
         var barWidth = screenWidth / ArraySize;
+
         for (var i = 0; i < ArraySize; i++)
         {
-            var color = Color.White;
+            var color = GetBarColor(i);
+            Vector2 position = new(i * barWidth, screenHeight - _values[i]);
+            Vector2 size = new(barWidth - 2, _values[i]);
 
-            if (IsFinished)
-            {
-                color = Color.Green;
-            }
-            else
-            {
-                if (i == _currentJ || i == _currentJ + 1)
-                {
-                    color = Color.Red;
-                }
-                else if (i >= ArraySize - _currentI)
-                {
-                    color = Color.Green;
-                }
-            }
-
-            Graphics.DrawRectangleV(
-                new Vector2(i * barWidth, screenHeight - _values[i]),
-                new Vector2(barWidth - 2, _values[i]),
-                color
-            );
+            Graphics.DrawRectangleV(position, size, color);
         }
+    }
+
+    private Color GetBarColor(int index)
+    {
+        if (IsFinished)
+        {
+            return Color.Green;
+        }
+
+        if (index == _currentJ || index == _currentJ + 1)
+        {
+            return Color.Red;
+        }
+
+        if (index >= ArraySize - _currentI)
+        {
+            return Color.Green;
+        }
+
+        return Color.White;
     }
 }
