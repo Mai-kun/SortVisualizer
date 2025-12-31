@@ -78,20 +78,6 @@ public class BubbleSort : ISorter
         }
     }
 
-    public void Draw(int screenWidth, int screenHeight)
-    {
-        var barWidth = screenWidth / ArraySize;
-
-        for (var i = 0; i < ArraySize; i++)
-        {
-            var color = GetBarColor(i);
-            Vector2 position = new(i * barWidth, screenHeight - _values[i]);
-            Vector2 size = new(barWidth - 2, _values[i]);
-
-            Graphics.DrawRectangleV(position, size, color);
-        }
-    }
-
     private Color GetBarColor(int index)
     {
         if (IsFinished)
