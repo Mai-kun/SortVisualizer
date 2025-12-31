@@ -23,6 +23,7 @@ internal static class Program
         var availableSorters = new List<ISorter>
         {
             new BubbleSort(),
+            new InsertionSort(),
         };
 
         var context = new SortingContext(availableSorters.First());
@@ -31,7 +32,7 @@ internal static class Program
         var dropdownButtonRec = new Rectangle(10, 10, 200, 40);
 
         float timer = 0;
-        const float delay = 0.01f;
+        const float delay = 0.03f;
         var isPaused = false;
 
         while (!Window.ShouldClose())
