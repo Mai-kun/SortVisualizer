@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Raylib_CSharp.Transformations;
 using SortingAlgorithm;
 
 namespace SortVisualizer;
@@ -12,6 +13,11 @@ public class SortingContext
     {
         SetSorter(initialSorter);
     }
+
+    public string AlgorithmName => _sorter.Name;
+    public int Comparisons => _sorter.Comparisons;
+    public int Swaps => _sorter.Swaps;
+    public bool IsFinished => _sorter.IsFinished;
 
     public string CurrentAlgorithmName => _sorter.GetType().Name;
 
@@ -29,14 +35,14 @@ public class SortingContext
 
     public void Update()
     {
-        if (!_sorter.IsFinished)
+        if (!IsFinished)
         {
             _sortingProcess.MoveNext();
         }
     }
 
-    public void Draw(int screenWidth, int screenHeight)
+    public void Draw(Rectangle drawArea)
     {
-        _sorter.Draw(screenWidth, screenHeight);
+        _sorter.Draw(drawArea);
     }
 }

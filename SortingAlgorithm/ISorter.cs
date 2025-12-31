@@ -1,14 +1,16 @@
 ﻿using System.Collections;
+using Raylib_CSharp.Transformations;
 
 namespace SortingAlgorithm;
 
 public interface ISorter
 {
-    bool IsFinished { get; }
+    public string Name { get; set; }
+    public int Comparisons { get; }
+    public int Swaps { get; }
+    public bool IsFinished { get; }
 
-    IEnumerator Sort();
-
-    void Draw(int screenWidth, int screenHeight);
-
-    void Reset();
+    public IEnumerator Sort();
+    public void Reset();
+    public void Draw(Rectangle drawArea);
 }

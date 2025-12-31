@@ -2,6 +2,7 @@
 using System.Numerics;
 using Raylib_CSharp.Colors;
 using Raylib_CSharp.Rendering;
+using Raylib_CSharp.Transformations;
 
 namespace SortingAlgorithm;
 
@@ -17,6 +18,9 @@ public class BubbleSort : ISorter
         Reset();
     }
 
+    public string Name { get; set; } = "Bubble Sort";
+    public int Comparisons { get; private set; }
+    public int Swaps { get; private set; }
     public bool IsFinished { get; private set; }
 
     public void Reset()
@@ -27,9 +31,11 @@ public class BubbleSort : ISorter
         var rand = new Random();
         for (var k = 0; k < ArraySize; k++)
         {
-            _values[k] = rand.Next(10, 400);
+            _values[k] = rand.Next(10, 350);
         }
 
+        Comparisons = 0;
+        Swaps = 0;
         IsFinished = false;
     }
 
@@ -40,8 +46,10 @@ public class BubbleSort : ISorter
         {
             for (_currentJ = 0; _currentJ < count - _currentI - 1; _currentJ++)
             {
+                Comparisons++;
                 if (_values[_currentJ] > _values[_currentJ + 1])
                 {
+                    Swaps++;
                     (_values[_currentJ], _values[_currentJ + 1]) = (_values[_currentJ + 1], _values[_currentJ]);
                 }
 
@@ -50,6 +58,24 @@ public class BubbleSort : ISorter
         }
 
         IsFinished = true;
+    }
+
+    public void Draw(Rectangle drawArea)
+    {
+        var barWidth = drawArea.Width / ArraySize;
+
+        for (var i = 0; i < ArraySize; i++)
+        {
+            var color = GetBarColor(i);
+
+            var posX = drawArea.X + i * barWidth;
+            var posY = drawArea.Y + drawArea.Height - _values[i];
+
+            Vector2 position = new(posX, posY);
+            Vector2 size = new(barWidth - 2, _values[i]);
+
+            Graphics.DrawRectangleV(position, size, color);
+        }
     }
 
     public void Draw(int screenWidth, int screenHeight)
