@@ -18,7 +18,7 @@ public class BubbleSort : ISorter
         Reset();
     }
 
-    public string Name { get; init; } = "Bubble Sort";
+    public string Name => "Bubble Sort";
     public int Comparisons { get; private set; }
     public int Swaps { get; private set; }
     public bool IsFinished { get; private set; }

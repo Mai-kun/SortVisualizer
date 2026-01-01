@@ -18,7 +18,7 @@ public class InsertionSort : ISorter
         Reset();
     }
 
-    public string Name { get; init; } = "Insertion Sort";
+    public string Name => "Insertion Sort";
     public int Comparisons { get; private set; }
     public int Swaps { get; private set; }
     public bool IsFinished { get; private set; }
