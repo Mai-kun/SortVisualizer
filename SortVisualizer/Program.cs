@@ -24,6 +24,7 @@ internal static class Program
         {
             new BubbleSort(),
             new InsertionSort(),
+            new SelectionSort(),
         };
 
         var context = new SortingContext(availableSorters.First());
