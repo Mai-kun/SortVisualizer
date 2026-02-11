@@ -17,9 +17,7 @@ public class SortingContext
     public string AlgorithmName => _sorter.Name;
     public int Comparisons => _sorter.Comparisons;
     public int Swaps => _sorter.Swaps;
-    public bool IsFinished => _sorter.IsFinished;
-
-    public string CurrentAlgorithmName => _sorter.GetType().Name;
+    private bool IsFinished => _sorter.IsFinished;
 
     public void SetSorter(ISorter sorter)
     {

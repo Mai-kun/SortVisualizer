@@ -27,7 +27,7 @@ internal static class Program
             new SelectionSort(),
         };
 
-        var context = new SortingContext(availableSorters.First());
+        var context = new SortingContext(availableSorters[0]);
 
         var isDropdownOpen = false;
         var dropdownButtonRec = new Rectangle(10, 10, 200, 40);
@@ -51,17 +51,12 @@ internal static class Program
                 {
                     for (var i = 0; i < availableSorters.Count; i++)
                     {
-                        var itemRec = new Rectangle(dropdownButtonRec.X,
-                            dropdownButtonRec.Y + dropdownButtonRec.Height * (i + 1), dropdownButtonRec.Width,
-                            dropdownButtonRec.Height);
-
-                        if (!ShapeHelper.CheckCollisionPointRec(mousePos, itemRec))
+                        var itemRec = GetDropdownItemRectangle(dropdownButtonRec, i);
+                        if (ShapeHelper.CheckCollisionPointRec(mousePos, itemRec))
                         {
-                            continue;
+                            context.SetSorter(availableSorters[i]);
+                            isDropdownOpen = false;
                         }
-
-                        context.SetSorter(availableSorters[i]);
-                        isDropdownOpen = false;
                     }
                 }
             }
@@ -100,17 +95,14 @@ internal static class Program
 
             Graphics.DrawRectangleRec(dropdownButtonRec, Color.Gray);
             Graphics.DrawRectangleLinesEx(dropdownButtonRec, 2, Color.Black);
-            Graphics.DrawText("Select algorithm", (int)(dropdownButtonRec.X + 10), (int)(dropdownButtonRec.Y + 10), 20,
-                Color.LightGray);
+            Graphics.DrawText("Select algorithm", (int)dropdownButtonRec.X + 10, (int)dropdownButtonRec.Y + 10, 20,
+                Color.White);
 
             if (isDropdownOpen)
             {
                 for (var i = 0; i < availableSorters.Count; i++)
                 {
-                    var itemRec = new Rectangle(dropdownButtonRec.X,
-                        dropdownButtonRec.Y + dropdownButtonRec.Height * (i + 1), dropdownButtonRec.Width,
-                        dropdownButtonRec.Height);
-
+                    var itemRec = GetDropdownItemRectangle(dropdownButtonRec, i);
                     var isHover = ShapeHelper.CheckCollisionPointRec(mousePos, itemRec);
                     Graphics.DrawRectangleRec(itemRec, isHover ? Color.DarkGray : Color.Gray);
                     Graphics.DrawRectangleLinesEx(itemRec, 1, Color.White);
@@ -121,9 +113,15 @@ internal static class Program
             }
 
             Graphics.EndDrawing();
-
         }
 
         Window.Close();
+
+    }
+
+    private static Rectangle GetDropdownItemRectangle(Rectangle dropdownButtonRec, int index)
+    {
+        return new Rectangle(dropdownButtonRec.X, dropdownButtonRec.Y + dropdownButtonRec.Height * (index + 1),
+            dropdownButtonRec.Width, dropdownButtonRec.Height);
     }
 }
